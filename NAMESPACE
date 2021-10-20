@@ -1,0 +1,7 @@
+exportPattern("^[[:alpha:]]+")
+import(dplyr)
+import(readxl)
+import(shiny)
+importFrom(shinythemes, shinytheme)
+import(shinyWidgets)
+import(imager)
