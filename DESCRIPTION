@@ -1,0 +1,14 @@
+Package: Especes
+Type: Package
+Title: Exploration des especes d'insectes et aves
+Version: 0.1.1
+Author: Thibaud Quemar
+Maintainer: Thibaud Quemar <thibaud.quemar@gmail.com>
+Description: Ce package permet d'explorer les espèces parmi les classes des insectes et des aves
+License: MIT
+Imports: dplyr, readxl, shiny, shinythemes, shinyWidgets, imager
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 3.6)
