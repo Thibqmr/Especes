@@ -371,6 +371,33 @@ F_Liste_Sp <- function(df_Espece)
   return(Liste_Sp)
 }
 
+#' Filtre par espece
+#'
+#' Permet de filtrer le \code{data.frame} \code{df_Especes} selon l'espèce
+#'
+#' @param df_Espece \code{data.frame} avec une colonne \code{Nom vernaculaire}
+#'
+#' @return \code{data.frame} \code{df_Especes} filtré selon l'espèce
+#'
+#' @examples
+#' library(dplyr)
+#' Especes %>%
+#'  F_Filtre_Par_Genre(genre = "Anas") %>%
+#'  F_Filtre_Par_Sp(espece = "Canard colvert")
+#'
+#' @export
+F_Filtre_Par_Sp <- function(df_Espece, espece)
+{
+  if(espece != "")
+  {
+    tab_Sp = df_Espece %>%
+      filter(`Nom vernaculaire` == espece)
+  }else
+  {
+    tab_Sp = df_Espece
+  }
+  return(tab_Sp)
+}
 
 #' Liste des noms scientifiques
 #'

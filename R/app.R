@@ -46,6 +46,12 @@ App_Especes <- function()
           options = list(`none-selected-text` = "Tous les genres")
         ),
         pickerInput(
+          inputId = "Espece",
+          label = "Espèce",
+          choices = c(""),
+          options = list(`none-selected-text` = "Toutes les espèces")
+        ),
+        pickerInput(
           inputId = "Sexe",
           label = "Sexe",
           choices = c(""),
@@ -186,9 +192,30 @@ App_Especes <- function()
 
     })
 
+    Liste_Sp <- reactive({
+
+      Liste_Sp = c("", F_Liste_Sp(tab_Genre()))
+
+    })
+
+    observe({
+
+      updatePickerInput(session = session,
+                        inputId = "Espece",
+                        choices = Liste_Sp()
+      )
+
+    })
+
+    tab_Sp <- reactive({
+
+      tab_Sp = F_Filtre_Par_Sp(df_Espece = tab_Genre(), espece  = input$Espece)
+
+    })
+
     Liste_Sexe <- reactive({
 
-      Liste_Sexe = c("", F_Liste_Sexe(tab_Genre()))
+      Liste_Sexe = c("", F_Liste_Sexe(tab_Sp()))
 
     })
 
@@ -203,7 +230,7 @@ App_Especes <- function()
 
     tab_Sexe <- reactive({
 
-      tab_Sexe = F_Filtre_Par_Sexe(df_Espece = tab_Genre(), sexe  = input$Sexe)
+      tab_Sexe = F_Filtre_Par_Sexe(df_Espece = tab_Sp(), sexe  = input$Sexe)
 
     })
 
