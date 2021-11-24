@@ -4,8 +4,7 @@
 \name{Especes}
 \alias{Especes}
 \title{Classification phylogenetique}
-\format{
-Un \code{data.frame} avec 11 colonnes :
+\format{Un \code{data.frame} avec 11 colonnes :
 \describe{
   \item{Classe}{Classe de l'espèce}
   \item{Ordre}{Ordre de l'espèce}
@@ -18,8 +17,7 @@ Un \code{data.frame} avec 11 colonnes :
   \item{Description}{Description de l'espèce}
   \item{Sexe}{Sexe de l'espèce pour les cas de dimorphisme sexuel}
   \item{Img}{Nom de l'image de l'espèce}
-}
-}
+}}
 \usage{
 Especes
 }

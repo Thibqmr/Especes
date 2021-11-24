@@ -1,7 +1,7 @@
 Package: Especes
 Type: Package
 Title: Exploration des especes d'insectes et aves
-Version: 0.2.0
+Version: 0.3.0
 Author: Thibaud Quemar
 Maintainer: Thibaud Quemar <thibaud.quemar@gmail.com>
 Description: Ce package permet d'explorer les espèces parmi les classes des insectes et des aves

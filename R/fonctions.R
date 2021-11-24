@@ -726,6 +726,28 @@ F_Extraire_Sp_sci <- function(df_Row)
   return(Sp_sci)
 }
 
+#' Extraction du genre
+#'
+#' Permet d'extraire le genre d'une espèce du \code{data.frame} \code{df_Row}
+#'
+#' @param df_Row \code{data.frame} avec une colonne \code{Genre}
+#'
+#' @return \code{character} avec le genre extrait
+#'
+#' @examples
+#' RandomRow = F_Random_Row(Especes)
+#'
+#' F_Extraire_Genre(RandomRow)
+#'
+#' @export
+F_Extraire_Genre <- function(df_Row)
+{
+  Genre = df_Row %>%
+    pull(Genre)
+  return(Genre)
+}
+
+
 #' Extraction de la famille
 #'
 #' Permet d'extraire la famille d'une espèce du \code{data.frame} \code{df_Row}
@@ -788,6 +810,29 @@ F_Extraire_Ordre <- function(df_Row)
     pull(Ordre)
   return(Ordre)
 }
+
+
+#' Extraction de la classe
+#'
+#' Permet d'extraire la classe d'une espèce du \code{data.frame} \code{df_Row}
+#'
+#' @param df_Row \code{data.frame} avec une colonne \code{Classe}
+#'
+#' @return \code{character} avec la classe extraite
+#'
+#' @examples
+#' RandomRow = F_Random_Row(Especes)
+#'
+#' F_Extraire_Classe(RandomRow)
+#'
+#' @export
+F_Extraire_Classe <- function(df_Row)
+{
+  Classe = df_Row %>%
+    pull(Classe)
+  return(Classe)
+}
+
 
 #' Extraction du sexe
 #'
@@ -898,4 +943,110 @@ F_Photo_Espece <- function(df_Row)
 {
   Img = F_Extraire_Img(df_Row)
   plot(load.image(system.file("extdata", paste0("Img/", Img), package = "Especes")), axes=FALSE)
+}
+
+
+
+#' Tirage aleatoire de 3 especes proches
+#'
+#' Permet de tirer aléatoirement 3 espèces du \code{data.frame} \code{df_Espece}
+#'
+#' @param df_Espece \code{data.frame} sur lequel on veut réaliser le tirage aléatoire des espèces
+#'
+#' @return Un vecteur de\code{character} de longueur 3 avec les 3 espèces
+#'
+#' @examples
+#' F_Tirage_Especes(Especes)
+#'
+#' library(dplyr)
+#' Especes %>%
+#'  F_Filtre_Par_Famille(famille = "Anatidae") %>%
+#'  F_Tirage_Especes()
+#'
+#' @export
+F_Tirage_Especes <- function(df_Espece)
+{
+  df_Espece_Complet <- df_Espece %>%
+    mutate(`Nom vernaculaire` = ifelse(is.na(`Nom vernaculaire`), `Nom scientifique`, `Nom vernaculaire`))
+
+  RandomRow <- F_Random_Row(df_Espece_Complet)
+  Espece_A_Trouver <- F_Extraire_Sp(RandomRow)
+
+  Genre_Espece_A_Trouver <- F_Extraire_Genre(RandomRow)
+
+  Liste_Especes <- df_Espece_Complet %>%
+    filter(Genre == Genre_Espece_A_Trouver & `Nom vernaculaire` != Espece_A_Trouver) %>%
+    F_Liste_Sp()
+
+  Vect_Especes <- Liste_Especes
+
+  if(length(Vect_Especes) >= 2)
+  {
+    Vect_Especes <- sample(Vect_Especes, 2)
+  }else
+  {
+    Famille_Espece_A_Trouver <- F_Extraire_Famille(RandomRow)
+
+    Liste_Especes <- df_Espece_Complet %>%
+      filter(Famille == Famille_Espece_A_Trouver & !`Nom vernaculaire` %in% c(Espece_A_Trouver, Vect_Especes)) %>%
+      F_Liste_Sp()
+
+    Vect_Especes <- c(Vect_Especes, sample(Liste_Especes, min((2-length(Vect_Especes)), length(Liste_Especes))))
+
+    if(length(Vect_Especes) < 2)
+    {
+      SsOrdre_Espece_A_Trouver <- F_Extraire_SousOrdre(RandomRow)
+
+      if(!is.na(SsOrdre_Espece_A_Trouver))
+      {
+        Liste_Especes <- df_Espece_Complet %>%
+          filter(`Sous-ordre` == SsOrdre_Espece_A_Trouver & !`Nom vernaculaire` %in% c(Espece_A_Trouver, Vect_Especes)) %>%
+          F_Liste_Sp()
+
+        Vect_Especes <- c(Vect_Especes, sample(Liste_Especes, min((2-length(Vect_Especes)), length(Liste_Especes))))
+
+      }
+
+      if(length(Vect_Especes) < 2)
+      {
+        Ordre_Espece_A_Trouver <- F_Extraire_Ordre(RandomRow)
+
+        Liste_Especes <- df_Espece_Complet %>%
+          filter(Ordre == Ordre_Espece_A_Trouver & !`Nom vernaculaire` %in% c(Espece_A_Trouver, Vect_Especes)) %>%
+          F_Liste_Sp()
+
+        Vect_Especes <- c(Vect_Especes, sample(Liste_Especes, min((2-length(Vect_Especes)), length(Liste_Especes))))
+
+        if(length(Vect_Especes) < 2)
+        {
+          Classe_Espece_A_Trouver <- F_Extraire_Classe(RandomRow)
+
+          Liste_Especes <- df_Espece_Complet %>%
+            filter(Classe == Classe_Espece_A_Trouver & !`Nom vernaculaire` %in% c(Espece_A_Trouver, Vect_Especes)) %>%
+            F_Liste_Sp()
+
+          Vect_Especes <- c(Vect_Especes, sample(Liste_Especes, min((2-length(Vect_Especes)), length(Liste_Especes))))
+
+
+          if(length(Vect_Especes) < 2)
+          {
+            Liste_Especes <- df_Espece_Complet %>%
+              filter(!`Nom vernaculaire` %in% c(Espece_A_Trouver, Vect_Especes)) %>%
+              F_Liste_Sp()
+
+            Vect_Especes <- c(Vect_Especes, sample(Liste_Especes, min((2-length(Vect_Especes)), length(Liste_Especes))))
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  Vect_Especes <- c(Espece_A_Trouver, Vect_Especes)
+
+  return(Vect_Especes)
 }
