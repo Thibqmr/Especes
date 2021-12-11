@@ -145,7 +145,7 @@ App_Especes <- function()
                        inputId = "EspA",
                        label = "Espèce A",
                        style = "stretch",
-                       color = "warning"
+                       color = "success"
                      ),
                      hr(style = "border-top: none;"),
                      actionBttn(
@@ -159,7 +159,7 @@ App_Especes <- function()
                        inputId = "EspC",
                        label = "Espèce C",
                        style = "stretch",
-                       color = "primary"
+                       color = "success"
                      ),
                      hr(style = "border-top: none;")
                    )

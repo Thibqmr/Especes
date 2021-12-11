@@ -4,7 +4,8 @@
 \alias{F_Tirage_Especes}
 \title{Tirage aleatoire de 3 especes proches}
 \usage{
-F_Tirage_Especes(df_Espece)
+F_Tirage_Especes(df_Espece, classe = "", ordre = "", sousordre = "",
+  famille = "", Sp_sci = FALSE)
 }
 \arguments{
 \item{df_Espece}{\code{data.frame} sur lequel on veut réaliser le tirage aléatoire des espèces}

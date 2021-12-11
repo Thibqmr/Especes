@@ -2,7 +2,7 @@
 % Please edit documentation in R/fonctions.R
 \name{F_Filtre_Par_Sp}
 \alias{F_Filtre_Par_Sp}
-\title{Filtre par espece}
+\title{Filtre par le nom vernaculaire de l'espece}
 \usage{
 F_Filtre_Par_Sp(df_Espece, espece)
 }
@@ -13,7 +13,7 @@ F_Filtre_Par_Sp(df_Espece, espece)
 \code{data.frame} \code{df_Especes} filtré selon l'espèce
 }
 \description{
-Permet de filtrer le \code{data.frame} \code{df_Especes} selon l'espèce
+Permet de filtrer le \code{data.frame} \code{df_Especes} selon l'espèce d'après le nom vernaculaire
 }
 \examples{
 library(dplyr)
