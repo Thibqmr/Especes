@@ -143,21 +143,21 @@ App_Especes <- function()
                    wellPanel(
                      actionBttn(
                        inputId = "EspA",
-                       label = "Espèce A",
+                       label = "-",
                        style = "stretch",
                        color = "success"
                      ),
                      hr(style = "border-top: none;"),
                      actionBttn(
                        inputId = "EspB",
-                       label = "Espèce B",
+                       label = "-",
                        style = "stretch",
                        color = "success"
                      ),
                      hr(style = "border-top: none;"),
                      actionBttn(
                        inputId = "EspC",
-                       label = "Espèce C",
+                       label = "-",
                        style = "stretch",
                        color = "success"
                      ),
@@ -416,7 +416,9 @@ App_Especes <- function()
 
     output$sp_sci <- renderText({ paste("<b><u>Nom scientifique</u></b><br><i>", Random_Sp_sci(), "</i>") })
 
-    output$sousfamille <- renderText({ paste("<b><u>Sous-famille</u></b><br>", Random_SsFamille()) })
+    output$sousfamille <- renderText({ifelse(!is.na(Random_SsFamille()),
+                                             paste("<b><u>Sous-famille</u></b><br>", Random_SsFamille()),
+                                             "") })
 
     output$famille <- renderText({ paste("<b><u>Famille</u></b><br>", Random_Famille()) })
 
